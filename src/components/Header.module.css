@@ -1,0 +1,262 @@
+.header {
+    background-color: transparent;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: var(--header-h-desktop);
+    padding: 0 100px;
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+}
+
+.nav {
+    display: flex;
+    align-items: top;
+    gap: 40px;
+}
+
+.nav a {
+    text-decoration: none;
+    text-wrap: nowrap;
+    font-weight: 400;
+    font-size: 24px;
+    padding-bottom: 15px;
+    color: var(--header-nav-text);
+    position: relative;
+    transition: color var(--transition-base);
+}
+
+.nav a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: var(--primary-green);
+    border-radius: 5px 5px 0 0;
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+}
+
+.nav a:hover,
+.nav a.active {
+    color: var(--text-black);
+}
+
+.nav a:hover::after,
+.nav a.active::after {
+    transform: scaleX(1);
+}
+
+.headerIconPart {
+    display: flex;
+    align-items: center;
+}
+
+.basketContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: var(--cursor-main);
+    margin: 0px 30px;
+    padding: 5px 10px;
+    border-radius: var(--radius-main);
+}
+
+.basketIcon {
+    height: 24px;
+    width: 24px;
+}
+
+.badge {
+    position: absolute;
+    background-color: var(--primary-green);
+    top: 3px;
+    right: 6px;
+    color: var(--text-white);
+    font-size: 8px;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.profile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
+    flex-shrink: 0;
+    gap: 10px; 
+    cursor: var(--cursor-main);
+    padding: 5px 10px;
+    border-radius: var(--radius-main);
+    transition: background-color var(--transition-base);
+}
+
+.profile:hover,
+.basketContainer:hover {
+    background-color: var(--color-hover-bg);
+}
+
+.profileDropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: var(--text-white);
+    min-width: 150px;
+    box-shadow: 0 5px 15px var(--color-shadow);
+    border-radius: var(--radius-main);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    z-index: var(--z-sidebar);
+    overflow: hidden;
+}
+
+.profileDropdown a, 
+.profileDropdown button {
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: var(--text-black);
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: var(--cursor-main);
+    transition: background-color var(--transition-base);
+}
+
+.profileDropdown a:hover, 
+.profileDropdown button:hover {
+    background-color: var(--primary-green);
+    color: var(--text-white);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.arrowIcon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform var(--transition-base);
+}
+
+.arrowRotate {
+    transform: rotate(180deg);
+}
+
+.burgerBtn {
+    display: none;
+    cursor: var(--cursor-main);
+    margin-right: auto;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background-color: var(--text-white);
+    z-index: var(--z-sidebar);
+    padding: 20px;
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 15px var(--color-shadow);
+}
+
+.sidebarOpen {
+    transform: translateX(0);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-overlay);
+    z-index: var(--z-overlay);
+}
+
+.sidebarHeader {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 40px;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: var(--cursor-main);
+    color: var(--text-black);
+}
+
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.mobileNav a {
+    text-decoration: none;
+    font-size: 20px;
+    color: var(--header-nav-text);
+    font-weight: 500;
+    transition: color var(--transition-base);
+}
+
+@media (max-width: 930px) {
+    .header {
+        min-height: var(--header-h-tablet);
+        height: var(--header-h-tablet);
+        padding: 0 20px;
+        justify-content: space-between;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .burgerBtn {
+        display: block;
+    }
+
+    .basketContainer {
+        margin: 0 20px;
+    }
+
+    .avatar {
+        width: 35px;
+        height: 35px;
+    }
+
+    .mobileNav a:hover {
+        color: var(--text-black); 
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        min-height: var(--header-h-mobile);
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+}

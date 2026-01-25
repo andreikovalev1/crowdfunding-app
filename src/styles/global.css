@@ -1,0 +1,33 @@
+:root {
+    /* Цвета */
+    --primary-green: #68D017;
+    --text-white: #FFFFFF;
+    --header-nav-text: #7c7c7c;
+    --text-gray: #9C9C9C;
+    --text-black: #222222;
+    --color-overlay: rgba(0, 0, 0, 0.4);
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-hover-bg: #0000000D;
+
+    /* Шрифты */
+    --font-main: "DM Sans", sans-serif;
+
+    /* Размеры */
+    --header-h-desktop: 115px;
+    --header-h-tablet: 80px;
+    --header-h-mobile: 60px;
+    --z-sidebar: 1000;
+    --z-overlay: 999;
+
+    /* Другое */
+    --cursor-main: pointer;
+    --transition-base: 0.3s ease;
+    --radius-main: 10px;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-black);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
