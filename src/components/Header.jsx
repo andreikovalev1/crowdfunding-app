@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Header.module.css";
 import basketIcon from "../assets/icons/header-basket.svg";
@@ -7,10 +7,25 @@ import burgerIcon from "../assets/icons/hambergermenu.svg";
 
 const Header = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const profileRef = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const user = null;
     const location = useLocation();
     const cartCount = 0;
+
+    useEffect (() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setIsProfileOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const NavLinks = () => (
         <>
@@ -47,7 +62,7 @@ const Header = () => {
                     <img src={basketIcon} className={styles.basketIcon} alt="basket"></img>
                     <span className={styles.badge}>{cartCount}</span>
                 </div>
-                <div className={styles.profile} onClick={() => setIsProfileOpen(!isProfileOpen)}>
+                <div className={styles.profile} ref={profileRef} onClick={() => setIsProfileOpen(!isProfileOpen)}>
                     <img 
                         src={user?.photoURL } //|| "https://via.placeholder.com/35"
                         className={styles.avatar} 
