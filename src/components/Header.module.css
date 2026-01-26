@@ -119,6 +119,7 @@
     padding: 10px 0;
     z-index: var(--z-sidebar);
     overflow: hidden;
+    animation: slideDown 0.4s ease-out;
 }
 
 .profileDropdown a, 
@@ -157,6 +158,51 @@
 
 .arrowRotate {
     transform: rotate(180deg);
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    background-color: #f9fafb;
+}
+
+.userInfo strong {
+    font-size: 14px;
+    color: var(--text-black);
+    display: block;
+}
+
+.userInfo span {
+    font-size: 12px;
+    color: var(--text-gray);
+}
+
+.profileDropdown hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 5px 0;
+}
+
+.profileDropdown .logoutBtn {
+    color: #ef4444 ; 
+    font-weight: 600;
+}
+
+.profileDropdown .logoutBtn:hover {
+    background-color: #fef2f2 ;
+    color: #dc2626 ;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .burgerBtn {

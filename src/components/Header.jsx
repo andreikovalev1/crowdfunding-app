@@ -1,17 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import basketIcon from "../assets/icons/header-basket.svg";
 import arrowIcon from "../assets/icons/header-arrow-down.svg";
 import burgerIcon from "../assets/icons/hambergermenu.svg";
 import defaultProfile from "../assets/icons/default-profile.png";
+import { logout } from "../store/slices/authSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const Header = () => {
+
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-    const profileRef = useRef(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const user = null;
+    const profileRef = useRef(null);
+
+    const { user } = useSelector((state) => state.auth);
+
     const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const cartCount = 0;
 
     useEffect (() => {
@@ -22,19 +29,24 @@ const Header = () => {
         };
 
         document.addEventListener("click", handleClickOutside);
-
         return () => {
             document.removeEventListener("click", handleClickOutside);
         };
-    }, []);
+    }, [location.pathname]);
 
-    const NavLinks = () => (
+    const handleLogout = () => {
+        dispatch(logout());
+        setIsProfileOpen(false);
+        navigate("/");
+    }
+
+    const NavLinks = ({onLinkClick}) => (
         <>
-            <Link to="/" className={location.pathname === "/" ? styles.active: ""}>Home</Link>
-            <Link to="/">My plots</Link>
-            <Link to="/">Contacts</Link>
-            <Link to="/shop" className={location.pathname === "/shop" ? styles.active: ""}>Shop</Link>
-            <Link to="/">Wallet</Link>
+            <Link to="/" className={location.pathname === "/" ? styles.active: ""}  onClick={onLinkClick}>Home</Link>
+            <Link to="/plots" onClick={onLinkClick}>My plots</Link>
+            <Link to="/contacts" onClick={onLinkClick}>Contacts</Link>
+            <Link to="/shop" className={location.pathname === "/shop" ? styles.active: ""} onClick={onLinkClick}>Shop</Link>
+            <Link to="/wallet" onClick={onLinkClick}>Wallet</Link>
         </>
     )
 
@@ -50,7 +62,7 @@ const Header = () => {
                     <button className={styles.closeBtn} onClick={() => setIsMenuOpen(false)}>X</button>
                 </div>
                 <nav className={styles.mobileNav}>
-                    <NavLinks />
+                    <NavLinks onLinkClick={() => setIsMenuOpen(false)}/>
                 </nav>
             </div>
             {isMenuOpen && <div className={styles.overlay} onClick={() => setIsMenuOpen(false)} />}
@@ -66,25 +78,35 @@ const Header = () => {
                 <div 
                     className={styles.profile}
                     ref={profileRef}
-                    onClick={(e) => {
-                        if (!e.target.closest(`${styles.profileDropdown}`)) {
+                    onClick={() => {
+                        if(!user) {
+                            navigate("/login");
+                        } else {
                             setIsProfileOpen(!isProfileOpen);
                         }
                     }}
                 >
                     <img 
-                        src={user?.photoURL || defaultProfile} 
+                        src={user?.image || defaultProfile} 
                         className={styles.avatar} 
                         alt="user">
                     </img>
                     <span className={`${styles.arrowIcon} ${isProfileOpen ? styles.arrowRotate : ""}`}>
                         <img src={arrowIcon} alt="arrow-down"></img>
                     </span>
-                    {isProfileOpen && (
+                    {isProfileOpen && user && (
                         <div className={styles.profileDropdown} onClick={(e) => e.stopPropagation()}>
-                            <Link to="/profile">Profile</Link>
-                            <Link to="/orders">My orders</Link>
-                            <button onClick={() => console.log('Logout')}>Logout</button>
+                            <div className={styles.userInfo}>
+                                <strong>{user.firstName}</strong>
+                                <span>{user.email}</span>
+                            </div>
+                            <hr />
+                            <Link to="/profile" onClick={() => setIsProfileOpen(false)}>Profile</Link>
+                            <Link to="/orders" onClick={() => setIsProfileOpen(false)}>My orders</Link>
+                            <button className={styles.logoutBtn} onClick={handleLogout}>
+                                Logout
+                            </button>
+                                
                         </div>
                     )}
                 </div>

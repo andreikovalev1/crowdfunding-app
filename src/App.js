@@ -8,6 +8,7 @@ import Header from "./components/Header";
 
 const App = () => {
   return (
+    <>
     <Router>
         <Header />
         <Routes>
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
         </Routes>
     </Router>
+    </>
   );
 };
 
