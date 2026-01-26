@@ -4,6 +4,7 @@ import styles from "./Header.module.css";
 import basketIcon from "../assets/icons/header-basket.svg";
 import arrowIcon from "../assets/icons/header-arrow-down.svg";
 import burgerIcon from "../assets/icons/hambergermenu.svg";
+import defaultProfile from "../assets/icons/default-profile.png";
 
 const Header = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -20,10 +21,10 @@ const Header = () => {
             }
         };
 
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("click", handleClickOutside);
 
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("click", handleClickOutside);
         };
     }, []);
 
@@ -62,9 +63,17 @@ const Header = () => {
                     <img src={basketIcon} className={styles.basketIcon} alt="basket"></img>
                     <span className={styles.badge}>{cartCount}</span>
                 </div>
-                <div className={styles.profile} ref={profileRef} onClick={() => setIsProfileOpen(!isProfileOpen)}>
+                <div 
+                    className={styles.profile}
+                    ref={profileRef}
+                    onClick={(e) => {
+                        if (!e.target.closest(`${styles.profileDropdown}`)) {
+                            setIsProfileOpen(!isProfileOpen);
+                        }
+                    }}
+                >
                     <img 
-                        src={user?.photoURL } //|| "https://via.placeholder.com/35"
+                        src={user?.photoURL || defaultProfile} 
                         className={styles.avatar} 
                         alt="user">
                     </img>
@@ -72,7 +81,7 @@ const Header = () => {
                         <img src={arrowIcon} alt="arrow-down"></img>
                     </span>
                     {isProfileOpen && (
-                        <div className={styles.profileDropdown}>
+                        <div className={styles.profileDropdown} onClick={(e) => e.stopPropagation()}>
                             <Link to="/profile">Profile</Link>
                             <Link to="/orders">My orders</Link>
                             <button onClick={() => console.log('Logout')}>Logout</button>
