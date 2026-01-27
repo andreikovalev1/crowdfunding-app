@@ -8,10 +8,13 @@
     --color-overlay: rgba(0, 0, 0, 0.4);
     --color-shadow: rgba(0, 0, 0, 0.1);
     --color-hover-bg: #0000000D;
+    --welcome-main-text-color: #353640;
 
     /* Шрифты */
     --font-main: "DM Sans", sans-serif;
     --font-input: 15px;
+    --home-family: "DM Serif Text", serif;
+    --home-title: 64px;
 
     /* Размеры */
     --header-h-desktop: 115px;
@@ -19,12 +22,20 @@
     --header-h-mobile: 60px;
     --z-sidebar: 1000;
     --z-overlay: 999;
+    --home-text-container-width: 1080px;
+    --card-max-width: 550px;
+    --card-aspect-ratio: 550 / 380;
 
     /* Другое */
     --cursor-main: pointer;
     --transition-base: 0.3s ease;
     --radius-main: 10px;
     --shadow-input: 0 0 0 5px rgba(34, 197, 94, 0.1);
+
+    /* Отступы */
+    --section-spacing-top: clamp(60px, 10vw, 120px);
+    --section-spacing-bottom: clamp(80px, 12vw, 150px);
+    --cards-gap: clamp(15px, 2vw, 35px);
 }
 
 body {

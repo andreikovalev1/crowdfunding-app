@@ -40,15 +40,25 @@ const Header = () => {
         navigate("/");
     }
 
-    const NavLinks = ({onLinkClick}) => (
-        <>
-            <Link to="/" className={location.pathname === "/" ? styles.active: ""}  onClick={onLinkClick}>Home</Link>
-            <Link to="/plots" onClick={onLinkClick}>My plots</Link>
-            <Link to="/contacts" onClick={onLinkClick}>Contacts</Link>
-            <Link to="/shop" className={location.pathname === "/shop" ? styles.active: ""} onClick={onLinkClick}>Shop</Link>
-            <Link to="/wallet" onClick={onLinkClick}>Wallet</Link>
+    const handleNavClick = (e, path) => {
+            if(!user && path !== "/") {
+                e.preventDefault();
+                navigate("/login");
+            } else {
+                navigate(path);
+            }
+            setIsMenuOpen(false);
+        };
+
+    const NavLinks = () => (
+            <>
+            <Link to="/" className={location.pathname === "/" ? styles.active: ""}  onClick={(e) => handleNavClick(e, "/")}>Home</Link>
+            <Link to="/plots" onClick={(e) => handleNavClick(e, "/plots")}>My plots</Link>
+            <Link to="/contacts" onClick={(e) => handleNavClick(e, "/contacts")}>Contacts</Link>
+            <Link to="/shop" className={location.pathname === "/shop" ? styles.active: ""} onClick={(e) => handleNavClick(e, "/shop")}>Shop</Link>
+            <Link to="/wallet" onClick={(e) => handleNavClick(e, "/wallet")}>Wallet</Link>
         </>
-    )
+    );
 
     return (
         <header className={styles.header}>
@@ -71,7 +81,7 @@ const Header = () => {
                     <NavLinks />
                 </nav>
                 
-                <div className={styles.basketContainer}>
+                <div className={styles.basketContainer} onClick={(e) => handleNavClick(e, "/basket")}>
                     <img src={basketIcon} className={styles.basketIcon} alt="basket"></img>
                     <span className={styles.badge}>{cartCount}</span>
                 </div>
