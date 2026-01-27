@@ -24,7 +24,7 @@ const HomePage = () => {
             <main className={styles.container}>
                 <section className={styles.welcomeBlock}>
                     <h1>Rent your own field, invest in farming, and grow your own vegetables</h1>
-                    <button className={styles.welcomeBtn}>Let's start</button>
+                    <button className={styles.welcomeBtn} onClick={handleStartClick}>Let's start</button>
                 </section>
 
                 <section className={styles.cards}>

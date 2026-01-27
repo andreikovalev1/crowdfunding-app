@@ -1,3 +1,8 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -9,7 +14,16 @@
   min-height: calc(100vh - var(--header-h-desktop)); 
   background-color: #f5f7f9;
   padding: 20px;
-  transition: background-color var(--transition-base);
+}
+
+.errorBox {
+    background-color: #fee2e2;
+    color: #ef4444;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    text-align: center;
+    border: 1px solid #fecaca;
 }
 
 .form {
@@ -101,10 +115,4 @@
   .form h1 {
     font-size: 22px;
   }
-}
-
-/* Простая анимация появления формы */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
 }

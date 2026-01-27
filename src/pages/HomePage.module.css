@@ -15,11 +15,11 @@ body {
     color: var(--welcome-main-text-color);
 
     gap: clamp(40px, 5vw, 80px);
-    margin: var(--section-spacing-top) auto var(--section-spacing-bottom)
+    margin: var(--section-spacing-top) auto 0 auto;
 }
 
 .welcomeBlock h1 {
-    font-size: 64px;
+    font-size: clamp(32px, 5vw, 64px);
     line-height: 1.2;
     margin: 0;
 }
@@ -31,7 +31,7 @@ body {
     gap: var(--cards-gap);
     flex-wrap: wrap;
     width: 95%;
-    margin: clamp(90px, 10vw, 130px) auto;
+    margin: clamp(90px, 10vw, 130px) auto var(--section-spacing-bottom) auto;
 }
 
 .cards img {
@@ -54,6 +54,8 @@ body {
     color: var(--text-white);
     font-family: var(--font-main);
     font-weight: bold;
+    cursor: var(--main-cursor);
+    transition: opacity 0.3s ease, transform 0.1s ease;
 }
 
 .welcomeBtn:hover {

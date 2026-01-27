@@ -1,10 +1,24 @@
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .header {
     background-color: transparent;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     min-height: var(--header-h-desktop);
-    padding: 0 100px;
+    padding: 0 clamp(20px, 5vw, 100px);
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
 }
 
 .headerContent {
@@ -58,13 +72,23 @@
 }
 
 .basketContainer {
+    margin: 0px 30px;
+}
+
+.basketContainer, 
+.profile {
     position: relative;
     display: flex;
     align-items: center;
     cursor: var(--cursor-main);
-    margin: 0px 30px;
     padding: 5px 10px;
     border-radius: var(--radius-main);
+    transition: background-color var(--transition-base);
+}
+
+.profile {
+    gap: 10px; 
+    transition: background-color var(--transition-base);
 }
 
 .basketIcon {
@@ -86,19 +110,6 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
-}
-
-.profile {
-    position: relative;
-    display: flex;
-    align-items: center;
-    text-wrap: nowrap;
-    flex-shrink: 0;
-    gap: 10px; 
-    cursor: var(--cursor-main);
-    padding: 5px 10px;
-    border-radius: var(--radius-main);
-    transition: background-color var(--transition-base);
 }
 
 .profile:hover,
@@ -152,7 +163,6 @@
 .arrowIcon {
     display: flex;
     align-items: center;
-    flex-shrink: 0;
     transition: transform var(--transition-base);
 }
 
@@ -192,17 +202,6 @@
 .profileDropdown .logoutBtn:hover {
     background-color: #fef2f2 ;
     color: #dc2626 ;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .burgerBtn {

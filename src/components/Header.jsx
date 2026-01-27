@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { logout } from "../store/slices/authSlice";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./Header.module.css";
+
 import basketIcon from "../assets/icons/header-basket.svg";
 import arrowIcon from "../assets/icons/header-arrow-down.svg";
 import burgerIcon from "../assets/icons/hambergermenu.svg";
 import defaultProfile from "../assets/icons/default-profile.png";
-import { logout } from "../store/slices/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+
 
 const Header = () => {
 
@@ -27,11 +29,15 @@ const Header = () => {
                 setIsProfileOpen(false);
             }
         };
-
         document.addEventListener("click", handleClickOutside);
         return () => {
             document.removeEventListener("click", handleClickOutside);
         };
+    }, []);
+
+    useEffect (() => {
+        setIsMenuOpen(false);
+        setIsProfileOpen(false)
     }, [location.pathname]);
 
     const handleLogout = () => {
@@ -47,18 +53,32 @@ const Header = () => {
             } else {
                 navigate(path);
             }
-            setIsMenuOpen(false);
-        };
+    };
 
-    const NavLinks = () => (
+    const NavLinks = () => {
+        const links = [
+            { name: "Home", path: "/" },
+            { name: "My plots", path: "/plots" },
+            { name: "Contacts", path: "/contacts" },
+            { name: "Shop", path: "/shop" },
+            { name: "Wallet", path: "/wallet" },
+        ];
+
+        return (
             <>
-            <Link to="/" className={location.pathname === "/" ? styles.active: ""}  onClick={(e) => handleNavClick(e, "/")}>Home</Link>
-            <Link to="/plots" onClick={(e) => handleNavClick(e, "/plots")}>My plots</Link>
-            <Link to="/contacts" onClick={(e) => handleNavClick(e, "/contacts")}>Contacts</Link>
-            <Link to="/shop" className={location.pathname === "/shop" ? styles.active: ""} onClick={(e) => handleNavClick(e, "/shop")}>Shop</Link>
-            <Link to="/wallet" onClick={(e) => handleNavClick(e, "/wallet")}>Wallet</Link>
-        </>
-    );
+                {links.map((link) => (
+                    <Link
+                        key={link.path}
+                        to={link.path}
+                        className={location.pathname === link.path ? styles.active : ""}
+                        onClick={(e) => handleNavClick(e, link.path)}
+                    >
+                        {link.name}
+                    </Link>
+                ))}
+            </>
+        );
+    };
 
     return (
         <header className={styles.header}>
@@ -75,6 +95,7 @@ const Header = () => {
                     <NavLinks onLinkClick={() => setIsMenuOpen(false)}/>
                 </nav>
             </div>
+
             {isMenuOpen && <div className={styles.overlay} onClick={() => setIsMenuOpen(false)} />}
             <div className={styles.headerContent}>
                 <nav className={styles.nav}>
@@ -85,6 +106,7 @@ const Header = () => {
                     <img src={basketIcon} className={styles.basketIcon} alt="basket"></img>
                     <span className={styles.badge}>{cartCount}</span>
                 </div>
+
                 <div 
                     className={styles.profile}
                     ref={profileRef}
@@ -101,22 +123,25 @@ const Header = () => {
                         className={styles.avatar} 
                         alt="user">
                     </img>
+
                     <span className={`${styles.arrowIcon} ${isProfileOpen ? styles.arrowRotate : ""}`}>
                         <img src={arrowIcon} alt="arrow-down"></img>
                     </span>
+
                     {isProfileOpen && user && (
                         <div className={styles.profileDropdown} onClick={(e) => e.stopPropagation()}>
                             <div className={styles.userInfo}>
                                 <strong>{user.firstName}</strong>
                                 <span>{user.email}</span>
                             </div>
+
                             <hr />
+
                             <Link to="/profile" onClick={() => setIsProfileOpen(false)}>Profile</Link>
                             <Link to="/orders" onClick={() => setIsProfileOpen(false)}>My orders</Link>
                             <button className={styles.logoutBtn} onClick={handleLogout}>
                                 Logout
                             </button>
-                                
                         </div>
                     )}
                 </div>
