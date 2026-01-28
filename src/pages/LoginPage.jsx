@@ -51,7 +51,7 @@ const LoginPage = () => {
                     password: formData.password,
                   }).unwrap();
                   dispatch(setCredentials({user: userData, token: userData.token }));
-                  navigate("/");
+                  navigate("/home");
               }  
         } catch (error) {
             setErrorMessage(error.data?.message || "Something went wrong. Please try again");

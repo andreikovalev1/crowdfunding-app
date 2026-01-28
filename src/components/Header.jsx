@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../store/slices/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Header.module.css";
@@ -16,7 +16,7 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const profileRef = useRef(null);
 
-    const { user } = useSelector((state) => state.auth);
+    const { user,token } = useSelector((state) => state.auth);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -35,29 +35,15 @@ const Header = () => {
         };
     }, []);
 
-    useEffect (() => {
-        setIsMenuOpen(false);
-        setIsProfileOpen(false)
-    }, [location.pathname]);
-
     const handleLogout = () => {
         dispatch(logout());
         setIsProfileOpen(false);
         navigate("/");
     }
 
-    const handleNavClick = (e, path) => {
-            if(!user && path !== "/") {
-                e.preventDefault();
-                navigate("/login");
-            } else {
-                navigate(path);
-            }
-    };
-
-    const NavLinks = () => {
+    const NavLinks = ({onLinkClick}) => {
         const links = [
-            { name: "Home", path: "/" },
+            { name: "Home", path: token ? "/home" : "/" },
             { name: "My plots", path: "/plots" },
             { name: "Contacts", path: "/contacts" },
             { name: "Shop", path: "/shop" },
@@ -67,14 +53,21 @@ const Header = () => {
         return (
             <>
                 {links.map((link) => (
-                    <Link
+                    <NavLink
                         key={link.path}
                         to={link.path}
-                        className={location.pathname === link.path ? styles.active : ""}
-                        onClick={(e) => handleNavClick(e, link.path)}
+                        end={link.path === "/"}
+                        className={ ({isActive}) => (isActive ? styles.active : "")}
+                        onClick={(e) => {
+                            if (!user && link.path !== "/") {
+                                e.preventDefault();
+                                navigate("/login");
+                            }
+                            if (onLinkClick) onLinkClick();
+                        }}
                     >
                         {link.name}
-                    </Link>
+                    </NavLink>
                 ))}
             </>
         );
@@ -102,7 +95,7 @@ const Header = () => {
                     <NavLinks />
                 </nav>
                 
-                <div className={styles.basketContainer} onClick={(e) => handleNavClick(e, "/basket")}>
+                <div className={styles.basketContainer} onClick={() => !user ? navigate("/login") : navigate("/basket")}>
                     <img src={basketIcon} className={styles.basketIcon} alt="basket"></img>
                     <span className={styles.badge}>{cartCount}</span>
                 </div>

@@ -1,0 +1,73 @@
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.headerSection {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.mainTitle {
+    font-size: 56px;
+    font-family: serif; /* Или ваш акцентный шрифт */
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.welcomeUser {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.searchPlaceholder {
+    background: #f3f3f3;
+    padding: 15px 30px;
+    border-radius: 12px;
+    display: inline-block;
+    color: #999;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Основная сетка страницы */
+.contentGrid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* Левая часть под список, правая под карту */
+    gap: 40px;
+    align-items: start;
+}
+
+.listSide {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mapSide {
+    height: 600px;
+    background: #e0e0e0;
+    border-radius: 16px;
+    position: sticky;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* Адаптивность для ТЗ */
+@media (max-width: 1024px) {
+    .contentGrid {
+        grid-template-columns: 1fr; /* Одна колонка на планшетах/телефонах */
+    }
+    
+    .mapSide {
+        height: 400px;
+        order: -1; /* Карту можно поднять выше списка на мобилках */
+    }
+}
