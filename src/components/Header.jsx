@@ -59,6 +59,7 @@ const Header = () => {
                         end={link.path === "/"}
                         className={ ({isActive}) => (isActive ? styles.active : "")}
                         onClick={(e) => {
+                            
                             if (!user && link.path !== "/") {
                                 e.preventDefault();
                                 navigate("/login");

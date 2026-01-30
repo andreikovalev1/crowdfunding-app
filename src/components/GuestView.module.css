@@ -1,6 +1,5 @@
 .container {
-    width: 100%;
-    
+    width: 100%;  
 }
 
 .welcomeBlock {
@@ -20,6 +19,7 @@
     font-size: clamp(32px, 5vw, 64px);
     line-height: 1.2;
     margin: 0;
+    font-weight: 400;
 }
 
 .cards {
