@@ -52,11 +52,15 @@ const AuthorizedHome = () => {
             );
     })
     .sort((a,b) => {
-        if (sortBy === "Name") {
-                return a.company.name.localeCompare(b.company.name);
+            if (sortBy === "Name") {
+            const nameA = a.company?.name || "";
+            const nameB = b.company?.name || "";
+            return nameA.localeCompare(nameB);
             }
             if (sortBy === "Country") {
-                return a.address.country.localeCompare(b.address.country);
+                const countryA = a.address?.country || "";
+                const countryB = b.address?.country || "";
+                return countryA.localeCompare(countryB);
             }
             return 0;
     });
