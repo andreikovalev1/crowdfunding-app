@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './GuestView.module.css';
+import styles from './style.module.css';
 
-import firstImage from '../assets/images/homePage-first.png';
-import secondImage from '../assets/images/homePage-second.png';
-import thirdImage from '../assets/images/homePage-third.png';
+import firstImage from '../../assets/images/homePage-first.png';
+import secondImage from '../../assets/images/homePage-second.png';
+import thirdImage from '../../assets/images/homePage-third.png';
 
 const GuestView = () => {
 useEffect(() => {

@@ -1,0 +1,70 @@
+.headerSection {
+    text-align: center;
+    margin-bottom: clamp(20px, 3vw, 50px);
+    margin-top: clamp(60px, 8vw, 115px);
+}
+
+.mainTitle {
+    font-size: clamp(32px, 5vw, 64px);
+    font-family: 'DM Serif Text', serif;
+    color: var(--welcome-main-text-color);
+    margin: 0 auto clamp(25px, 4vw, 50px);
+    font-weight: 400;
+}
+
+.searchContainer {
+    width: 100%;
+    height: clamp(50px, 4vw, 70px);
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 40px;
+}
+
+.searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    background-color: var(--search-bar-background);
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: clamp(12px, 2vw, 20px);
+    display: flex;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.searchIcon img {
+    width: clamp(18px, 2vw, 25px);
+}
+
+.searchInput {
+    width: 100%;
+    height: clamp(40px, 6vh, 54px);
+    border: none;
+    background: transparent;
+    outline: none;
+    padding-left: clamp(30px, 4vw, 50px);
+    padding-right: clamp(110px, 10vw, 140px);
+    font-size: 15px;
+    font-family: var(--font-main);
+}
+
+.searchBtn {
+    position: absolute;
+    right: clamp(3px, 1vw, 10px);
+    height: calc(100% - 20px);
+    padding: 0 clamp(20px, 4vw, 40px);
+    background-color: var(--primary-green);
+    color: var(--text-white);
+    border-radius: var(--radius-main);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

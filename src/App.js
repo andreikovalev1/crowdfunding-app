@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import ShopPage from "./pages/ShopPage";
-import DetailsPage from "./pages/DetailsPage";
+import ShopPage from "./pages/ShopPage/ShopPage";
+import DetailsPage from "./pages/DetailsPage/DetailsPage";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
-import GuestView from "./components/GuestView";
-import AuthorizedHome from "./components/locations/AuthorizedHome";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
@@ -13,8 +12,7 @@ const App = () => {
     <Router>
         <Header />
         <Routes>
-            <Route path="/" element={<GuestView />} />
-            <Route path="/home" element={<AuthorizedHome />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<ShopPage />} />
             <Route path="/details/:id" element={<DetailsPage />} />
             <Route path="/login" element={<LoginPage />} />

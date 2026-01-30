@@ -38,7 +38,7 @@
 
     /* Отступы */
     --section-spacing-top: clamp(60px, 10vw, 120px);
-    --section-spacing-bottom: clamp(80px, 12vw, 150px);
+    --section-spacing-bottom: clamp(80px, 12vw, 130px);
     --cards-gap: clamp(15px, 2vw, 35px);
 }
 

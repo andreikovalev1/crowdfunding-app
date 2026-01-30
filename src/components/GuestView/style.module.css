@@ -29,7 +29,7 @@
     gap: var(--cards-gap);
     flex-wrap: wrap;
     width: 95%;
-    margin: clamp(90px, 10vw, 130px) auto var(--section-spacing-bottom) auto;
+    margin: clamp(90px, 10vw, 130px) auto;
 }
 
 .cards img {

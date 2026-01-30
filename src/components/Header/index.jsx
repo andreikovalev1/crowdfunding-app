@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { logout } from "../store/slices/authSlice";
+import { logout} from "../../store/slices/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import styles from "./Header.module.css";
+import styles from "./style.module.css";
 
-import basketIcon from "../assets/icons/header-basket.svg";
-import arrowIcon from "../assets/icons/header-arrow-down.svg";
-import burgerIcon from "../assets/icons/hambergermenu.svg";
-import defaultProfile from "../assets/icons/default-profile.png";
+import basketIcon from "../../assets/icons/header-basket.svg";
+import arrowIcon from "../../assets/icons/header-arrow-down.svg";
+import burgerIcon from "../../assets/icons/hambergermenu.svg";
+import defaultProfile from "../../assets/icons/default-profile.png";
 
 
 const Header = () => {
@@ -43,7 +43,7 @@ const Header = () => {
 
     const NavLinks = ({onLinkClick}) => {
         const links = [
-            { name: "Home", path: token ? "/home" : "/" },
+            { name: "Home", path: token ? "/" : "/" },
             { name: "My plots", path: "/plots" },
             { name: "Contacts", path: "/contacts" },
             { name: "Shop", path: "/shop" },

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styles from "./LoginPage.module.css";
+import styles from "./style.module.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation, useRegisterMutation } from "../api/authApi";
-import { setCredentials } from "../store/slices/authSlice";
+import { useLoginMutation, useRegisterMutation } from "../../api/authApi";
+import { setCredentials } from "../../store/slices/authSlice";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -51,7 +51,7 @@ const LoginPage = () => {
                     password: formData.password,
                   }).unwrap();
                   dispatch(setCredentials({user: userData, token: userData.token }));
-                  navigate("/home");
+                  navigate("/");
               }  
         } catch (error) {
             setErrorMessage(error.data?.message || "Something went wrong. Please try again");

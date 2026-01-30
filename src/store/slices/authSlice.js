@@ -5,6 +5,7 @@ const authSlice = createSlice({
   initialState: {
     user: JSON.parse(localStorage.getItem("user")) || null,
     token: localStorage.getItem("token") === "undefined" ? null : localStorage.getItem("token") || null,
+    searchQuery: localStorage.getItem("searchQuery") || "",
   },
   reducers: {
     setCredentials: (state, { payload }) => {
@@ -22,9 +23,14 @@ const authSlice = createSlice({
       state.token = null;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("searchQuery");
+    },
+    setSearchQuery: (state, { payload }) => {
+      state.searchQuery = payload;
+      localStorage.setItem("searchQuery", payload);
     },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setSearchQuery } = authSlice.actions;
 export default authSlice.reducer;

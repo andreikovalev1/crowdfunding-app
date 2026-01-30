@@ -1,0 +1,56 @@
+.locationCard {
+    background: #fff;
+    margin-bottom: 35px;
+    border-radius: 10px;
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+}
+
+.locationImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.companyName {
+    font-size: clamp(15px, 2vw, 20px);
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.countryName {
+    color: #999;
+    margin: 0;
+    font-size: clamp(13px, 1vw, 16px);
+}
+
+.cardShopBtn {
+    padding: clamp(8px, 2vw, 15px) clamp(20px, 3vw, 40px);
+    background: transparent;
+    border: 2px solid var(--primary-green);
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cardShopBtn:hover {
+    background: var(--primary-green);
+    color: #fff;
+}
+
+.cardShopBtn:active {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+}
