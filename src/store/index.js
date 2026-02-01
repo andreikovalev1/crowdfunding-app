@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { authApi } from "../api/authApi";
 import { locationsApi } from "./services/locationsApi";
 import authReducer from "./slices/authSlice";
+import "leaflet/dist/leaflet.css"
 
 export const store = configureStore({
     reducer: {

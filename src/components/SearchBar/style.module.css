@@ -68,3 +68,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
+.searchBtn:hover {
+  opacity: 0.8;
+}
+
+.searchBtn:active {
+  transform: scale(0.98);
+}

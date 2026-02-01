@@ -6,6 +6,7 @@ import { setSearchQuery } from '../../store/slices/authSlice';
 import GuestView from '../../components/GuestView';
 import SearchBar from '../../components/SearchBar';
 import LocationCard from '../../components/LocationCard';
+import MapDisplay from '../../components/MapDisplay';
 import arrowIcon from '../../assets/icons/header-arrow-down.svg';
 import filterIcon from '../../assets/icons/filter-icon.svg';
 import styles from './style.module.css';
@@ -83,7 +84,11 @@ const HomePage = () => {
                         {isLoading && <p className={styles.statusMsg}>Loading locations...</p>}
                         
                         {filteredLocations?.map((loc) => (
-                            <LocationCard key={loc.id} loc={loc} />
+                            <LocationCard 
+                            key={loc.id} 
+                            loc={loc}
+                            allLocations={filteredLocations}
+                            />
                         ))}
 
                         {filteredLocations?.length === 0 && !isLoading && (
@@ -93,9 +98,7 @@ const HomePage = () => {
                 </div>
 
                 <section className={styles.mapSide}>
-                    <div className={styles.mapMock}>
-                        <p>Interactive Map will be here</p>
-                    </div>
+                   <MapDisplay locations={filteredLocations} />
                 </section>
             </div>
         </main>

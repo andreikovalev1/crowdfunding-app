@@ -1,9 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
 import styles from './style.module.css';
 
-const LocationCard = ({ loc }) => {
+const LocationCard = ({ loc, allLocations }) => {
+    const navigate = useNavigate();
+
     const handleShopClick = () => {
-        window.location.href = `/shop?location=${loc.address.city}`;
+       navigate(`/shop?location=${loc.address.city}`, {
+        state: {
+            results: allLocations,
+            selectedId: loc.id,
+        }
+       });
     };
 
     return (
