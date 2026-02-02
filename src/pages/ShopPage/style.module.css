@@ -11,22 +11,22 @@
 
 .investContainer {
     width: 100%;
-    padding: 30px 0 15px clamp(60px, 3vw, 100px); 
+    padding: 0 40px; 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 .investTitle {
-    width: 110px;
+    text-wrap: nowrap;
     font-size: 24px;
-    text-align: center;
+    text-align: flex-start;
 }
 
 .divider {
     border: none;
     border-top: 5px solid var(--primary-green);
-    width: 110px;
+    width: 160px;
     margin-top: 5px;
     border-radius: 5px 5px 0 0;
 }
@@ -144,7 +144,7 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 550px));
     gap: 35px;
     width: 100%;
-    padding: 0 clamp(50px, 3vw, 100px);
+    padding: clamp(50px, 3vw, 100px);
     justify-content: center;
     margin-bottom: 40px;
 }

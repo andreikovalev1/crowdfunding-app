@@ -1,27 +1,35 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback, Suspense, lazy } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useGetLocationsQuery } from '../../store/services/locationsApi';
-import { setSearchQuery } from '../../store/slices/authSlice';
+import { setSearchQuery, setSearchResults } from '../../store/slices/authSlice';
 
 import GuestView from '../../components/GuestView';
 import SearchBar from '../../components/SearchBar';
 import LocationCard from '../../components/LocationCard';
-import MapDisplay from '../../components/MapDisplay';
 import arrowIcon from '../../assets/icons/header-arrow-down.svg';
 import filterIcon from '../../assets/icons/filter-icon.svg';
 import styles from './style.module.css';
-import { map } from 'leaflet';
+
+const MapDisplay = lazy(() => import('../../components/MapDisplay'));
 
 const HomePage = () => {
+    
     const dispatch = useDispatch();
-    const { user, searchQuery } = useSelector((state) => state.auth);
+    const user = useSelector((state) => state.auth.user);
+    const searchQuery = useSelector((state) => state.auth.searchQuery);
     const { data, isLoading } = useGetLocationsQuery();
     const [sortBy, setSortBy] = useState("All");
     const [isSortOpen, setIsSortOpen] = useState(false);
+    const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
 
     const sortRef = useRef(null);
     const mapRef = useRef(null);
     const sortOptions = ["All", "Name", "Country"];
+
+    useEffect(() => {
+        const handler = setTimeout(() => setDebouncedQuery(searchQuery), 300);
+        return () => clearTimeout(handler);
+    }, [searchQuery]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -29,13 +37,14 @@ const HomePage = () => {
                 setIsSortOpen(false);
             }
         };
-        if (isSortOpen) document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        if (isSortOpen) document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
     }, [isSortOpen]);
 
-    if (!user) return <GuestView />;
-
-    const filteredLocations = data?.users?.filter((loc) => {
+    const filteredLocations = useMemo(() => {
+    if (!data?.users) return [];
+    
+    return data.users.filter((loc) => {
         if (!searchQuery) return true;
         const q = searchQuery.toLowerCase();
         return (
@@ -43,21 +52,24 @@ const HomePage = () => {
             (loc.address?.country || "").toLowerCase().includes(q) ||
             (loc.address?.city || "").toLowerCase().includes(q)
         );
-    }).sort((a, b) => {
-        if (sortBy === "Name") return (a.company?.name || "").localeCompare(b.company?.name || "");
-        if (sortBy === "Country") return (a.address?.country || "").localeCompare(b.address?.country || "");
-        return 0;
-    });
+        }).sort((a, b) => {
+            if (sortBy === "Name") return (a.company?.name || "").localeCompare(b.company?.name || "");
+            if (sortBy === "Country") return (a.address?.country || "").localeCompare(b.address?.country || "");
+            return 0;
+        });
+    }, [data, debouncedQuery, sortBy]);
 
-    const handleSearch = (query) => {
+    const handleSearch = useCallback((query) => {
         dispatch(setSearchQuery(query));
-    };
+    }, [dispatch]);
 
     useEffect(() => {
-        if (window.location.hash === '#map' && mapRef.current) {
+        if (window.location.hash === '#map' && mapRef.current && !isLoading) {
             mapRef.current.scrollIntoView({ behavior: 'smooth'});
         };
     }, [isLoading]);
+
+    if (!user) return <GuestView />;
 
     return (
         <main className={styles.container}>
@@ -95,7 +107,6 @@ const HomePage = () => {
                             <LocationCard 
                             key={loc.id} 
                             loc={loc}
-                            allLocations={filteredLocations}
                             />
                         ))}
 
@@ -106,7 +117,9 @@ const HomePage = () => {
                 </div>
 
                 <section className={styles.mapSide} ref={mapRef}>
-                   <MapDisplay locations={filteredLocations} />
+                   <Suspense fallback={<div className={styles.mapLoader}>Loading Map...</div>}>
+                        <MapDisplay locations={filteredLocations} />
+                   </Suspense>
                 </section>
             </div>
         </main>

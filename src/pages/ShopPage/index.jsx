@@ -1,5 +1,7 @@
-import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
-import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
+import React, { useRef, useEffect, useLayoutEffect, useState, useMemo } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearSelectedLocation } from '../../store/slices/authSlice';
 import { useGetLocationsQuery } from '../../store/services/locationsApi';
 import ShopLocationCard from '../../components/ShopLocationCard';
 import styles from './style.module.css';
@@ -9,15 +11,15 @@ import filterIcon from '../../assets/icons/filter-icon.svg';
 
 
 const ShopPage = () => {
-    const location = useLocation();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const { searchQuery, selectedLocationId, cart } = useSelector((state) => state.auth);
     const { data } = useGetLocationsQuery();
     const [sortBy, setSortBy] = useState("All");
     const [isSortOpen, setIsSortOpen] = useState(false);
     const sortRef = useRef();
 
-    const selectedId = location.state?.selectedId;
     const cityQuery = searchParams.get('location');
     const sortOptions = ["All", "Name", "Country"];
 
@@ -30,34 +32,46 @@ const ShopPage = () => {
         if (isSortOpen) document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
     }, [isSortOpen]);
+    
+    const finalLocations = useMemo(() => {
+        const baseData = data?.users || [];
+        return [...baseData]
+        .filter(loc => {
+                const globalQ = searchQuery.toLowerCase();
+                const matchesGlobal = !searchQuery || (
+                    (loc.company?.name || "").toLowerCase().includes(globalQ) ||
+                    (loc.address?.country || "").toLowerCase().includes(globalQ) ||
+                    (loc.address?.city || "").toLowerCase().includes(globalQ)
+                );
+
+                const matchesCity = !cityQuery || 
+                    loc.address?.city?.toLowerCase().includes(cityQuery.toLowerCase());
+
+                return matchesGlobal && matchesCity;
+            })
+            .sort((a, b) => {
+                if (sortBy === "Name") return (a.company?.name || "").localeCompare(b.company?.name || "");
+                if (sortBy === "Country") return (a.address?.country || "").localeCompare(b.address?.country || "");
+                return 0;
+            });
+    }, [data, searchQuery, cityQuery, sortBy]);
 
     useLayoutEffect(() => {
-        if (selectedId) {
+        if (selectedLocationId) {
             const timer = setTimeout(() => {
-                const element = document.getElementById(`card-${selectedId}`);
+                const element = document.getElementById(`card-${selectedLocationId}`);
                 if (element) {
                     element.scrollIntoView({ 
                         behavior: 'smooth', 
                         block: 'center' 
                     });
+                    dispatch(clearSelectedLocation());
                 }
             }, 100);
             return () => clearTimeout(timer);
         }
-    }, [selectedId, finalLocations]);
+    }, [selectedLocationId, dispatch]);
 
-    const baseData = location.state?.results || data?.users || [];
-
-    const finalLocations = [...baseData]
-        .filter(loc => {
-            if (!cityQuery) return true;
-            return loc.address?.city?.toLowerCase().includes(cityQuery.toLowerCase());
-        })
-        .sort((a, b) => {
-            if (sortBy === "Name") return (a.company?.name || "").localeCompare(b.company?.name || "");
-            if (sortBy === "Country") return (a.address?.country || "").localeCompare(b.address?.country || "");
-            return 0;
-        });
 
     return (
         <main>
@@ -96,13 +110,20 @@ const ShopPage = () => {
             </div>
             
             <div className={styles.cardContainer}>
-                {finalLocations.map(item => (
-                    <div id={`card-${item.id}`} key={item.id}>
-                        <ShopLocationCard 
-                            loc={item}
-                        />
-                    </div>    
-                ))}
+                {finalLocations.map(item => {
+                    const itemInCart = cart.find(c => c.id === item.id);
+
+                    return (
+                        <div id={`card-${item.id}`} key={item.id}>
+                            <ShopLocationCard 
+                                loc={item} 
+                                isSelected={selectedLocationId === item.id}
+                                isInCart={!!itemInCart}
+                                cartType={itemInCart?.cartType}
+                            />
+                        </div>    
+                    );
+                })}
             </div>
         </main>
     );

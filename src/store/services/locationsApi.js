@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const locationsApi = createApi({
     reducerPath: "locationsApi",
     baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com" }),
+    keepUnusedDataFor: 300,
     tagTypes: ["Plots", "Locations"],
     endpoints: (builder) => ({
         getLocations: builder.query({

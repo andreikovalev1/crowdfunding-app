@@ -1,43 +1,44 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'
+import React, { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSelectedLocationId } from '../../store/slices/authSlice';
 import styles from './style.module.css';
 
-const LocationCard = ({ loc, allLocations }) => {
+const LocationCard = memo(({ loc }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const handleShopClick = () => {
-       navigate(`/shop?location=${loc.address.city}`, {
-        state: {
-            results: allLocations,
-            selectedId: loc.id,
-        }
-       });
+    if(!loc) return null;
+
+    const handleShopClick = (e) => {
+        e.stopPropagation();
+        dispatch(setSelectedLocationId(loc.id));
+        navigate('/shop');
     };
 
     return (
-        <article className={styles.locationCard}>
+        <article className={styles.locationCard} id={`card-${loc.id}`}>
             <div className={styles.imageWrapper}>
                 <img 
                     src={loc.landImage} 
                     onError={(e) => { e.target.src = loc.backupImage; }}
-                    alt={loc.address.city} 
+                    alt={loc.address?.city} 
                     className={styles.locationImage}
+                    loading="lazy"
                 />
             </div>
             <div className={styles.cardFooter}>
                 <div className={styles.textGroup}>
-                    <h3 className={styles.companyName}>{loc.company.name}</h3>
-                    <p className={styles.countryName}>{loc.address.country}</p>
+                    <h3 className={styles.companyName}>{loc.company?.name}</h3>
+                    <p className={styles.countryName}>{loc.address?.country}</p>
                 </div>
-                <button 
-                    className={styles.cardShopBtn}
-                    onClick={handleShopClick}
-                >
-                    Shop
-                </button>
+                
+                <div className={styles.actions}>
+                    <button type="button" className={styles.cardShopBtn} onClick={handleShopClick}>Shop</button>
+                </div>
             </div>
         </article>
     );
-};
+});
 
 export default LocationCard;
