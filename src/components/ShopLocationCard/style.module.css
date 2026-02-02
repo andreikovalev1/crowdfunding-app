@@ -1,24 +1,24 @@
 .card {
-    background: #ffffff;
-    border-radius: 16px;
+    background: var(--background-shop-card);
+    border-radius: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    cursor: pointer;
 }
 
-/* Если карточка выбрана при переходе */
-.selected {
-    border-color: #4CAF50;
-    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
-    transform: translateY(-4px);
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px var(--color-shadow);
+    border-color: #e0e0e0;
 }
 
 .imageWrapper {
     position: relative;
-    height: 180px;
+    width: 100%;
+    aspect-ratio: 550 / 420;
 }
 
 .image {
@@ -28,30 +28,31 @@
 }
 
 .content {
-    padding: 16px;
+    padding: 20px;
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
-    gap: 8px;
+    gap: clamp(7px, 1vh, 10px);
 }
 
 .title {
     margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a1a1a;
+    font-size: clamp(18px, 2vh, 24px);
+    font-weight: 500;
+    color: var(--text-black);
 }
 
 .locationText {
     margin: 0;
-    font-size: 14px;
-    color: #666;
+    font-size: clamp(14px, 2vh, 20px);
+    color: var(--text-gray);
     margin-bottom: 8px;
 }
 
 .details {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: clamp(7px, 1vh, 10px);
     margin-bottom: 16px;
 }
 
@@ -62,14 +63,14 @@
 }
 
 .label {
-    font-size: 14px;
-    color: #888;
+    font-size: clamp(14px, 2vh, 20px);
+    color: var(--text-gray);
 }
 
 .value, .priceValue {
-    font-size: 14px;
-    font-weight: 700;
-    color: #333;
+    font-size: clamp(14px, 2vh, 20px);
+    font-weight: 400;
+    color: var(--text-black);
 }
 
 .boxesRow {
@@ -91,30 +92,39 @@
 }
 
 .investBtn, .reserveBtn {
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
+    padding: clamp(10px, 2vw, 15px) clamp(30px, 3vw, 40px);
+    border-radius: var(--radius-main);
+    font-size: clamp(14px, 2vw, 16px);
     cursor: pointer;
-    transition: 0.2s;
     border: none;
+    transition: opacity var(--transition-base), transform 0.1s ease;
 }
 
 .investBtn {
-    background-color: #1a1a1a;
-    color: white;
+    background-color: transparent;
+    color: var(--text-black);
+    border: 2px solid var(--primary-green)
 }
 
 .investBtn:hover {
-    background-color: #333;
+    background-color: var(--primary-green);
+    color: var(--text-white);
 }
 
 .reserveBtn {
-    background-color: #f5f5f5;
-    color: #1a1a1a;
+    background-color: transparent;
+    color: var(--primary-green);
 }
 
 .reserveBtn:hover {
-    background-color: #e8e8e8;
+    background-color: #cecece;
+    color: var(--text-black);
+}
+
+.investBtn:hover, .reserveBtn:hover {
+    opacity: 0.8;
+}
+
+.investBtn:active, .reserveBtn:active {
+    transform: scale(0.98);
 }

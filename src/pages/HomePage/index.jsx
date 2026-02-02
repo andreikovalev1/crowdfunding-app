@@ -10,6 +10,7 @@ import MapDisplay from '../../components/MapDisplay';
 import arrowIcon from '../../assets/icons/header-arrow-down.svg';
 import filterIcon from '../../assets/icons/filter-icon.svg';
 import styles from './style.module.css';
+import { map } from 'leaflet';
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const HomePage = () => {
     const [isSortOpen, setIsSortOpen] = useState(false);
 
     const sortRef = useRef(null);
+    const mapRef = useRef(null);
     const sortOptions = ["All", "Name", "Country"];
 
     useEffect(() => {
@@ -50,6 +52,12 @@ const HomePage = () => {
     const handleSearch = (query) => {
         dispatch(setSearchQuery(query));
     };
+
+    useEffect(() => {
+        if (window.location.hash === '#map' && mapRef.current) {
+            mapRef.current.scrollIntoView({ behavior: 'smooth'});
+        };
+    }, [isLoading]);
 
     return (
         <main className={styles.container}>
@@ -97,7 +105,7 @@ const HomePage = () => {
                     </section>
                 </div>
 
-                <section className={styles.mapSide}>
+                <section className={styles.mapSide} ref={mapRef}>
                    <MapDisplay locations={filteredLocations} />
                 </section>
             </div>
