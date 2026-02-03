@@ -46,7 +46,6 @@ module.exports = {
       template: './public/index.html',
       favicon: './public/favicon.png'
     }),
-    new BundleAnalyzerPlugin(),
   ],
   devServer: {
     historyApiFallback: true,
