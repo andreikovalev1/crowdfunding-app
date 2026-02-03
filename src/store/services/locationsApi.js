@@ -7,7 +7,7 @@ export const locationsApi = createApi({
     tagTypes: ["Plots", "Locations"],
     endpoints: (builder) => ({
         getLocations: builder.query({
-            query: () => "/users?limit=100",
+            query: () => "/users?limit=50",
             transformResponse: (response) => ({
                 ...response,
                 users: response.users.map(user => {

@@ -26,7 +26,7 @@
 .divider {
     border: none;
     border-top: 5px solid var(--primary-green);
-    width: 160px;
+    width: 70px;
     margin-top: 5px;
     border-radius: 5px 5px 0 0;
 }

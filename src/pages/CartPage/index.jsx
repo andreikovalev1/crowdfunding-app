@@ -15,11 +15,6 @@ const CartPage = () => {
 
     return (
         <main className={styles.cartPage}>
-            <div className={shopStyles.investContainer}>
-                <span className={shopStyles.investTitle}>Your Selection</span>
-                <hr className={shopStyles.divider} />
-            </div>
-
             {cart.length > 0 ? (
                 <div className={shopStyles.cardContainer}> 
                     {cart.map(item => (
