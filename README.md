@@ -1,6 +1,6 @@
 ## 🔗 Live Demo
 
-[Посмотреть проект вживую](https://crowfunding-app.netlify.app/)
+[Посмотреть проект вживую](https://app-crowfunding.netlify.app/)
 
 # Crowdfunding Land SPA
 
