@@ -2,10 +2,6 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './style.module.css';
 
-import firstImage from '../../assets/images/homePage-first.png';
-import secondImage from '../../assets/images/homePage-second.png';
-import thirdImage from '../../assets/images/homePage-third.png';
-
 const GuestView = () => {
 useEffect(() => {
     document.body.style.backgroundColor = "#F0FEE2";
@@ -28,9 +24,9 @@ useEffect(() => {
             </section>
 
             <section className={styles.cards}>
-                <img src={firstImage} alt="first-image" />
-                <img src={secondImage} alt="second-image" />
-                <img src={thirdImage} alt="third-image" />
+                <img src='/images/homePage-first.webp' alt="first-image" />
+                <img src='/images/homePage-second.webp' alt="second-image" />
+                <img src='/images/homePage-third.webp' alt="third-image" />
             </section>
         </main>
     );

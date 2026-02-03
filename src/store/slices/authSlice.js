@@ -6,7 +6,6 @@ const authSlice = createSlice({
     const user = JSON.parse(localStorage.getItem("user")) || null;
     const token = localStorage.getItem("token") === "undefined" ? null : localStorage.getItem("token") || null;
     
-    // Определяем ключ корзины: если юзер есть — его личный, если нет — гостевой
     const cartKey = user?.id ? `cart_${user.id}` : "cart";
     const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
@@ -29,7 +28,6 @@ const authSlice = createSlice({
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
 
-      // При входе переключаем корзину на ту, что принадлежит этому ID
       const userCartKey = `cart_${user.id}`;
       const savedCart = JSON.parse(localStorage.getItem(userCartKey)) || [];
       state.cart = savedCart;
@@ -38,12 +36,12 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.searchQuery = "";
-      state.cart = []; // Очищаем стейт, но не трогаем личные корзины в localStorage
+      state.cart = [];
       
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       localStorage.removeItem("searchQuery");
-      localStorage.removeItem("cart"); // Удаляем только общую/гостевую корзину
+      localStorage.removeItem("cart");
     },
     setSearchQuery: (state, { payload }) => {
       state.searchQuery = payload;
@@ -60,7 +58,6 @@ const authSlice = createSlice({
     },
     addToCart: (state, { payload }) => {
       state.cart.push(payload);
-      // Сохраняем в ключ текущего юзера
       const key = state.user?.id ? `cart_${state.user.id}` : "cart";
       localStorage.setItem(key, JSON.stringify(state.cart));
     },

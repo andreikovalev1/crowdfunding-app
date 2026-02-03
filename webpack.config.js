@@ -1,12 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-  entry: './src/index.js', // Точка входа
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/', // Нужно для корректной работы React Router
+    filename: '[name].[contenthash:8].js',
+    publicPath: '/',
+    clean: true,
   },
   module: {
     rules: [
@@ -43,10 +45,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      favicon: './public/favicon.png'
     }),
+    new BundleAnalyzerPlugin(),
   ],
   devServer: {
-    historyApiFallback: true, // Позволяет React Router управлять путями
+    historyApiFallback: true,
     port: 3000,
     open: true,
   },

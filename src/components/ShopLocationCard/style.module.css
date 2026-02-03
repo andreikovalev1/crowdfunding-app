@@ -88,11 +88,10 @@
     margin-left: 4px;
 }
 
-.square {
-    width: 10px;
-    height: 10px;
-    background-color: #4CAF50;
-    border-radius: 2px;
+.squareIcon {
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary-green);
 }
 
 .buttonGroup {

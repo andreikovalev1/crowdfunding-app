@@ -2,7 +2,6 @@ import React, { useState, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../store/slices/authSlice';
 import styles from './style.module.css';
-import grassIcon from '../../assets/icons/grass-rectangle.svg';
 
 const ShopLocationCard = memo(({ loc, isSelected, isCart, onRemove, isInCart, cartType }) => {
     const [isPending, setIsPending] = useState(false);
@@ -73,7 +72,7 @@ const ShopLocationCard = memo(({ loc, isSelected, isCart, onRemove, isInCart, ca
                         <span className={styles.value}>{size}qm</span>
                         <div className={styles.boxesRow}>
                             {boxes.map((_, i) => (
-                                <img key={i} src={grassIcon} alt="size-unit" className={styles.squareIcon} />
+                                <div key={i}  title='Size init' className={styles.squareIcon} />
                             ))}
                         </div>
                     </div>
