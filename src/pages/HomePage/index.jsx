@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback, Suspense, lazy } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useGetLocationsQuery } from '../../store/services/locationsApi';
-import { setSearchQuery, setSearchResults } from '../../store/slices/authSlice';
+import { setSearchQuery } from '../../store/slices/authSlice';
 
 import GuestView from '../../components/GuestView';
 import SearchBar from '../../components/SearchBar';
@@ -45,8 +45,8 @@ const HomePage = () => {
     if (!data?.users) return [];
     
     return data.users.filter((loc) => {
-        if (!searchQuery) return true;
-        const q = searchQuery.toLowerCase();
+        if (!debouncedQuery) return true;
+        const q = debouncedQuery.toLowerCase();
         return (
             (loc.company?.name || "").toLowerCase().includes(q) ||
             (loc.address?.country || "").toLowerCase().includes(q) ||

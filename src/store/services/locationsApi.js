@@ -24,12 +24,7 @@ export const locationsApi = createApi({
             }),
             providesTags: ["Locations"],
         }),
-        
-        getPlots: builder.query({
-            query: (category = "furniture") => `/products/category/${category}`,
-            providesTags: ["Plots"],
-        }),
     }),
 });
 
-export const { useGetLocationsQuery, useGetPlotsQuery } = locationsApi;
+export const { useGetLocationsQuery } = locationsApi;
